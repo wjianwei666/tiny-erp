@@ -1,0 +1,70 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: erp-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: erp-auth
+          uri: lb://erp-auth
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-system
+          uri: lb://erp-system
+          predicates:
+            - Path=/api/system/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-purchase
+          uri: lb://erp-purchase
+          predicates:
+            - Path=/api/purchase/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-sales
+          uri: lb://erp-sales
+          predicates:
+            - Path=/api/sales/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-inventory
+          uri: lb://erp-inventory
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-finance
+          uri: lb://erp-finance
+          predicates:
+            - Path=/api/finance/**
+          filters:
+            - StripPrefix=0
+
+        - id: erp-ai
+          uri: lb://erp-ai
+          predicates:
+            - Path=/api/ai/**
+          filters:
+            - StripPrefix=0
+
+logging:
+  level:
+    com.tinyerp: DEBUG
+    org.springframework.cloud.gateway: DEBUG
